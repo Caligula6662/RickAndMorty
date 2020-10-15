@@ -1,5 +1,5 @@
 @media screen and (min-width: 1400px) {
-  .main {
+  .container-fluid {
     padding-left: 80px;
     padding-right: 80px;
   }

@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Query} from 'react-apollo';
-import CharacterCard from "./CharacterCard";
+import EpisodeCard from "./EpisodeCard";
 import helper from "../../shared/helper";
 import {gql} from "apollo-boost";
 
-const GetCharacters = (page, filter) => gql`{
-        characters(page: ${page} filter: { ${filter} }) {
+const GetEpisodes = (page, filter) => gql`{
+        episodes(page: ${page} filter: { ${filter} }) {
             info {
               count,
               pages,
@@ -14,18 +14,15 @@ const GetCharacters = (page, filter) => gql`{
             results {
                 id,
                 name,
-                status,
-                species,
-                gender,
-                image,
-                episode {
-                    id,
-                    name
-                }, 
-                location {
-                    id,
+                air_date,
+                episode,
+                characters {
+                    image,
                     name,
-                    dimension
+                    species,
+                    status,
+                    id,
+                    gender
                 }
             }
         }
@@ -33,15 +30,15 @@ const GetCharacters = (page, filter) => gql`{
 
 /**
  * Löst die gegebenen Daten als Characters auf und gibt die einzelnen Characters zurück
- * @param props - Array der Charactere
+ * @param props - Array der Episodes
  * @returns {JSX.Element}
  * @constructor
  */
 
-const CharacterController = (props) => {
-    return props.characters.map((character) => {
-            return <div key={character.id} id={character.id} className={"col-12 col-lg-6 col-xl-4"}>
-                <CharacterCard character={character}/>
+const EpisodeController = (props) => {
+    return props.episodes.map((episode) => {
+            return <div key={episode.id} id={episode.id} className={"col-12 col-lg-6 col-xl-4"}>
+                <EpisodeCard episode={episode}/>
             </div>
         }
     )
@@ -55,7 +52,7 @@ const CharacterController = (props) => {
  * @constructor
  */
 
-const CharacterQuery = (props) => {
+const EpisodeQuery = (props) => {
     return (
         <Query query={props.query}>
             {({loading, error, data}) => {
@@ -63,14 +60,15 @@ const CharacterQuery = (props) => {
                 if (loading) return (
                     <div className="d-flex justify-content-center align-items-center vh-100 flex-column w-100 text-center">
                         <div className={"spinner-border"} role={"status"}></div>
-                        <p className={"text-success"}>Collecting more Mortys...</p>
+                        <p className={"text-success"}>Collecting more Adventures...</p>
                     </div>
                 )
+
                 if (error) return <p>Looks like we've got a problem...</p>
                 // Wir senden über einen Callback die Information zu den maximalen Pages
                 // zurück an das Parent FilterableCharacterList
-                props.maxPages(data.characters.info.pages)
-                return (<CharacterController characters={data.characters.results}/>)
+                props.maxPages(data.episodes.info.pages)
+                return (<EpisodeController episodes={data.episodes.results}/>)
             }}
         </Query>
     )
@@ -78,22 +76,18 @@ const CharacterQuery = (props) => {
 
 
 /**
- * Filterbare Characters List
+ * Filterbare Episodes List
  *
  *  Filter:
  *  name: String
- *  status: String
- *  species: String
- *  type: String
- *  gender: String
+ *  episode: String
  *
  * @param props : Filter für die Einträge der Charaktere Exp: filter={'name: "Annie"'}
  * @returns {JSX.Element}
  * @constructor
  */
 
-const FilterableCharacterList = (props) => {
-
+const FilterableEpisodesList = (props) => {
     /* Array der Pages, wird beim Scrollen erweitert*/
     const [pages, setPages] = useState([1]);
     const [maxPages, setMaxPages] = useState(null)
@@ -131,8 +125,8 @@ const FilterableCharacterList = (props) => {
             <div className={"container-fluid"}>
                 <div className={"row"} id={"character-col"}>
                     {pages.map((page, index) => {
-                            return <CharacterQuery key={index} page={page} maxPages={maxPagesCallback}
-                                                   query={GetCharacters(page, props.filter)}/>
+                            return <EpisodeQuery key={index} page={page} maxPages={maxPagesCallback}
+                                                   query={GetEpisodes(page, props.filter)}/>
                         }
                     )}
                 </div>
@@ -140,7 +134,6 @@ const FilterableCharacterList = (props) => {
 
         </>
     );
-
 }
 
-export default FilterableCharacterList;
+export default FilterableEpisodesList;
