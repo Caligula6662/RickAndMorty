@@ -15,7 +15,14 @@ const GetLocation = (id) => gql`{
           name,
           image,
           species,
-          status
+          status,
+          gender,
+          location {
+              id,
+              name,
+              type,
+              dimension
+          },
           episode {
             id,
             name
@@ -61,7 +68,7 @@ const LocationDetail = () => {
                                     <div className={"row"}>
                                         {e.residents.map(character => {
                                             return (
-                                                <div className={"col-12 col-lg-6 col-xl-4"}>
+                                                <div key={character.id} className={"col-12 col-lg-6 col-xl-4"}>
                                                     <CharacterCard key={character.id} character={character}/>
                                                 </div>
                                             )

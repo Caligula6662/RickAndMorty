@@ -3,6 +3,7 @@ import {gql} from "apollo-boost";
 import {Query} from "react-apollo";
 import {useParams, useHistory, Link} from 'react-router-dom';
 import EpisodeCard from "../FilterableEpisodesList/EpisodeCard";
+import helper from "../../shared/helper";
 
 const GetCharacter = (id) => gql`{
     character(id: ${id}) {
@@ -41,7 +42,7 @@ const CharacterDetail = () => {
     const history = useHistory();
 
     return (
-    <div>
+
 
         <Query query={GetCharacter(id)}>
             {({loading, error, data}) => {
@@ -50,16 +51,6 @@ const CharacterDetail = () => {
                 if (error) return <p>Looks like we've got a problem...</p>
 
                 let c = data.character;
-
-                let status = "bg-success";
-
-                if (c.status == "Dead") {
-                    status = "bg-danger"
-                }
-                if (c.status == "unknown") {
-                    status = "bg-secondary"
-                }
-
 
                 return (
                     <>
@@ -71,7 +62,7 @@ const CharacterDetail = () => {
                                     </figure>
                                 </div>
                                 <div className={"col-12 col-lg-8"}>
-                                    <span className={`small ${status} py-1 px-3 text-white text-uppercase rounded-pill`}>{c.status}</span>
+                                    <span className={`small ${helper.statusInfo(c.status)} py-1 px-3 text-white text-uppercase rounded-pill`}>{c.status}</span>
                                     <h1 className={"font-weight-black text-primary text-uppercase mt-3 mb-2"}>{c.name}</h1>
                                     <ul className={"list-unstyled"}>
                                         <li><span className={"font-weight-bold"}>Species:</span> {c.species}</li>
@@ -90,8 +81,8 @@ const CharacterDetail = () => {
                                 <div className={"row"}>
                                     {c.episode.map(episode => {
                                         return (
-                                            <div className={"col-12 col-md-6 col-lg-4 col-xl-3"}>
-                                                <EpisodeCard key={episode.id} episode={episode} />
+                                            <div key={episode.id} className={"col-12 col-md-6 col-lg-4 col-xl-3"}>
+                                                <EpisodeCard episode={episode} />
                                             </div>
                                         )
                                     })}
@@ -103,7 +94,6 @@ const CharacterDetail = () => {
             }}
         </Query>
 
-    </div>
     )
 }
 

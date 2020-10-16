@@ -12,13 +12,14 @@ import LocationDetail from "./components/LocationDetail/LocationDetail";
 const App = () => {
 
 
+    /*
     const [searchTerm, setSearchTerm] = useState("")
-
 
     const onSearch = (event) => {
         event.persist()
         setSearchTerm(event.target.value);
     }
+    */
 
     return (
         <>
@@ -41,9 +42,12 @@ const App = () => {
                                 Locations
                             </NavLink>
                         </div>
-                        <div className={"search"}>
-                            <input className={"form-control"} id={"search"} placeholder={"Suche"} onKeyUp={onSearch}/>
-                        </div>
+                        {/*
+                            <div className={"search"}>
+                                <input className={"form-control"} id={"search"} placeholder={"Suche"}
+                                       onKeyUp={onSearch}/>
+                            </div>
+                        */}
                     </div>
                 </div>
             </nav>
@@ -61,14 +65,25 @@ const App = () => {
                         <Route path='/episode/:id'>
                             <EpisodeDetail />
                         </Route>
+                        {/*
+                            <Route path='/episodes'>
+                                <FilterableEpisodesList filter={`name: "${searchTerm}"`}/>
+                            </Route>
+                            <Route path='/locations'>
+                            <FilterableLocationList filter={`name: "${searchTerm}"`} />
+                            </Route>
+                            <Route path='/home'>
+                            <FilterableCharacterList filter={`name: "${searchTerm}"`}/>
+                            </Route>
+                        */}
                         <Route path='/episodes'>
-                            <FilterableEpisodesList filter={`name: "${searchTerm}"`} />
+                            <FilterableEpisodesList />
                         </Route>
                         <Route path='/locations'>
-                            <FilterableLocationList filter={`name: "${searchTerm}"`} />
+                            <FilterableLocationList />
                         </Route>
                         <Route path='/home'>
-                            <FilterableCharacterList filter={`name: "${searchTerm}"`}/>
+                            <FilterableCharacterList />
                         </Route>
 
                         <Route exact path=''>

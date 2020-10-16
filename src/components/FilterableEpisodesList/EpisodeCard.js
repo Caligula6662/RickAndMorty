@@ -15,10 +15,11 @@ const EpisodeCard = (props) => {
                 </div>
                 <div className={"col-9"}>
                     <div className={"card-body"}>
-                        <p className={"small text-gray mb-0"}>{episode.air_date}</p>
                         <Link to={`/episode/${episode.id}`}>
                             <h5 className={"font-weight-bolder text-primary mb-0"}>{episode.name}</h5>
                         </Link>
+                        <p className={"small text-gray mb-0"}><span className={"font-weight-bold"}>Air Date:</span> {episode.air_date}</p>
+                        <p className={"small text-gray mb-0"}><span className={"font-weight-bold"}>Episode:</span> {episode.episode}</p>
                     </div>
                 </div>
             </div>

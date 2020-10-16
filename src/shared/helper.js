@@ -21,6 +21,15 @@ const helper = {
             timeout = setTimeout(later, wait);
             if (callNow) func.apply(context, args);
         };
+    },
+    statusInfo(status) {
+        if (status === "Dead") {
+            return "bg-danger"
+        }
+        if (status === "unknown") {
+            return "bg-secondary"
+        }
+        return "bg-success";
     }
 }
 

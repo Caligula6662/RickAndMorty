@@ -15,11 +15,12 @@ const LocationCard = (props) => {
                 </div>
                 <div className={"col-9"}>
                     <div className={"card-body"}>
-                        <p className={"small text-gray mb-0"}>{location.dimension}</p>
+
                         <Link to={`/location/${location.id}`}>
                             <h5 className={"font-weight-bolder text-primary mb-0"}>{location.name}</h5>
                         </Link>
-                        <p className={"text-muted"}>{location.type}</p>
+                        <p className={"small text-gray mb-0"}><span className={"font-weight-bold"}>Dimension:</span> {location.dimension}</p>
+                        <p className={"small text-gray mb-0"}><span className={"font-weight-bold"}>Type:</span> {location.type}</p>
                     </div>
                 </div>
             </div>

@@ -96,11 +96,25 @@ const FilterableCharacterList = (props) => {
 
     /* Array der Pages, wird beim Scrollen erweitert*/
     const [pages, setPages] = useState([1]);
-    const [maxPages, setMaxPages] = useState(null)
+    const [maxPages, setMaxPages] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filterType, setFilterType] = useState("name");
+
+    const onSearch = (event) => {
+        event.persist()
+        setSearchTerm(event.target.value);
+    }
+
+    const onChangeFilterType = (event) => {
+        event.persist()
+        setFilterType(event.target.value)
+    }
 
     const maxPagesCallback = (maxPages) => {
         setMaxPages(maxPages)
     }
+
+
 
     /**
      * Controlliert, wie weit gescrollt wurde und fügt am Trigger eine weiter Page hinzu.
@@ -129,10 +143,26 @@ const FilterableCharacterList = (props) => {
     return (
         <>
             <div className={"container-fluid"}>
+                <div className={"p-5 rounded bg-light mb-5"}>
+                    <h4 className={"font-weight-black text-primary"}>Filter:</h4>
+                    <div className={"form-inline"}>
+                        <div className={"form-group"}>
+                            <input className={"form-control mr-2"} id={"search"} placeholder={"Search"}
+                                   onKeyUp={onSearch}/>
+                            <select className={"form-control"} onChange={onChangeFilterType}>
+                                <option>name</option>
+                                <option>status</option>
+                                <option>species</option>
+                                <option>type</option>
+                                <option>gender</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div className={"row"} id={"character-col"}>
                     {pages.map((page, index) => {
                             return <CharacterQuery key={index} page={page} maxPages={maxPagesCallback}
-                                                   query={GetCharacters(page, props.filter)}/>
+                                                   query={GetCharacters(page, `${filterType}: "${searchTerm}"`)}/>
                         }
                     )}
                 </div>
