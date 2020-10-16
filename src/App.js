@@ -11,16 +11,6 @@ import LocationDetail from "./components/LocationDetail/LocationDetail";
 
 const App = () => {
 
-
-    /*
-    const [searchTerm, setSearchTerm] = useState("")
-
-    const onSearch = (event) => {
-        event.persist()
-        setSearchTerm(event.target.value);
-    }
-    */
-
     return (
         <>
             <nav className={"navbar navbar-expand-lg navbar-fixed navbar-dark bg-dark px-0"}>
@@ -33,7 +23,7 @@ const App = () => {
                     <div className={"collapse navbar-collapse"} id={"navigation"}>
                         <div className={"navbar-nav mr-auto"}>
                             <NavLink to={"/home"} className={"nav-link"} activeClassName={"active"}>
-                                Home
+                                Characters
                             </NavLink>
                             <NavLink to={"/episodes"} className={"nav-link"} activeClassName={"active"}>
                                 Episodes
@@ -42,12 +32,6 @@ const App = () => {
                                 Locations
                             </NavLink>
                         </div>
-                        {/*
-                            <div className={"search"}>
-                                <input className={"form-control"} id={"search"} placeholder={"Suche"}
-                                       onKeyUp={onSearch}/>
-                            </div>
-                        */}
                     </div>
                 </div>
             </nav>
@@ -65,29 +49,18 @@ const App = () => {
                         <Route path='/episode/:id'>
                             <EpisodeDetail />
                         </Route>
-                        {/*
-                            <Route path='/episodes'>
-                                <FilterableEpisodesList filter={`name: "${searchTerm}"`}/>
-                            </Route>
-                            <Route path='/locations'>
-                            <FilterableLocationList filter={`name: "${searchTerm}"`} />
-                            </Route>
-                            <Route path='/home'>
-                            <FilterableCharacterList filter={`name: "${searchTerm}"`}/>
-                            </Route>
-                        */}
                         <Route path='/episodes'>
                             <FilterableEpisodesList />
                         </Route>
                         <Route path='/locations'>
                             <FilterableLocationList />
                         </Route>
-                        <Route path='/home'>
+                        <Route path='/characters'>
                             <FilterableCharacterList />
                         </Route>
 
                         <Route exact path=''>
-                            <Redirect to="/home"/>
+                            <Redirect to="/characters" />
                         </Route>
                     </Switch>
 

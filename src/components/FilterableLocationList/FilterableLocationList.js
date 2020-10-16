@@ -97,12 +97,16 @@ const FilterableLocationList = (props) => {
 
     const onSearch = (event) => {
         event.persist()
-        setSearchTerm(event.target.value);
+        if (event.target.value.length > 1) {
+            setSearchTerm(event.target.value);
+        }
     }
 
     const onChangeFilterType = (event) => {
         event.persist()
-        setFilterType(event.target.value)
+        if (searchTerm.length > 0) {
+            setFilterType(event.target.value)
+        }
     }
 
     const maxPagesCallback = (maxPages) => {
